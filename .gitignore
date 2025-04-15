@@ -1,0 +1,48 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dotenv environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+logs/**/*.log
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Build outputs
+dist/
+build/
+public/build/
+
+# Frontend
+*.cache
+.cache/
+*.next/
+.next/
+out/
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+
+# Optional: Ignore compiled files (if you're using TypeScript)
+*.tsbuildinfo
+tsconfig.tsbuildinfo
