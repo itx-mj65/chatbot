@@ -115,6 +115,12 @@
             chatBox.innerHTML += `<div class="message user">${escapeHtml(userText)}</div>`;
             input.value = "";
 
+            // Create placeholder for bot message
+            const botMessage = document.createElement("div");
+            botMessage.classList.add("message", "bot");
+            chatBox.appendChild(botMessage);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
             try {
                 const res = await fetch("/api/chat", {
                     method: "POST",
@@ -122,15 +128,26 @@
                     body: JSON.stringify({ message: userText }),
                 });
                 const data = await res.json();
+                const botText = escapeHtml(data.response);
 
-                // Format the bot's response
-                const botResponse = formatCode(escapeHtml(data.response));
-                chatBox.innerHTML += `<div class="message bot">${botResponse}</div>`;
+                // Typewriter effect
+                let i = 0;
+                function typeChar() {
+                    if (i < botText.length) {
+                        botMessage.innerHTML += botText.charAt(i);
+                        i++;
+                        chatBox.scrollTop = chatBox.scrollHeight;
+                        setTimeout(typeChar, 20); // Speed (in ms) per character
+                    } else {
+                        // Format inline code after full message is typed
+                        botMessage.innerHTML = formatCode(botMessage.innerHTML);
+                    }
+                }
 
-                // Scroll to the latest message
-                chatBox.scrollTop = chatBox.scrollHeight;
+                typeChar();
+
             } catch (error) {
-                chatBox.innerHTML += `<div class="message bot">❌ Error: ${error.message}</div>`;
+                botMessage.innerHTML = `❌ Error: ${error.message}`;
             }
         }
     </script>
