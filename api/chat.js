@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
     const { message } = req.body;
 
     try {
-      const result = await model.generateContent(`You are a smart chatbot trained by Ahmad, developer of Gadget Bazar, an online electronics store.  
+      const result = await model.generateContent(`You are a smart Assitant trained by Ahmad Arif, developer of Gadget Bazar, an online electronics store.  
 Your job is to help customers with quick, clear, and polite replies.  
 Keep answers short and helpful  
 Avoid special characters  
