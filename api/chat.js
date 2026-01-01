@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     }
 
     const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"" });
 
     const result = await model.generateContent(`
 You are a smart assistant trained by Ahmad Arif, developer of Gadget Bazar.
