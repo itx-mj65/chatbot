@@ -1,19 +1,30 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
 export default async function handler(req, res) {
   try {
-    const apiKey = process.env.API_KEY;
+    if (!process.env.API_KEY) {
+      throw new Error("API_KEY missing");
+    }
 
-    return res.status(200).json({
-      success: true,
-      apiKeyExists: !!apiKey,
-      apiKeyLength: apiKey ? apiKey.length : 0,
-      message: apiKey
-        ? "API key is set correctly on Vercel"
-        : "API key is NOT set on Vercel"
+    const { message } = req.body || {};
+    if (!message) {
+      return res.status(400).json({ error: "Message required" });
+    }
+
+    const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash"
     });
-  } catch (error) {
+
+    const result = await model.generateContent(message);
+    const response = result.response.text();
+
+    return res.status(200).json({ response });
+
+  } catch (err) {
+    console.error("SERVER CRASH:", err);
     return res.status(500).json({
-      success: false,
-      error: error.message
+      error: err.message
     });
   }
 }
